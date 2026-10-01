@@ -1,0 +1,152 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 54;
+	objects = {
+
+/* Begin PBXFileReference section */
+		33CC10ED2044A3C60003C045 /* fixture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fixture.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		33CC10F02044A3C60003C045 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		33E51913231747F40026EE4D /* DebugProfile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DebugProfile.entitlements; sourceTree = "<group>"; };
+		33E51914231749380026EE4D /* Release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = Release.entitlements; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		33CC10E42044A3C60003C045 = {
+			isa = PBXGroup;
+			children = (
+				33FAB671232836740065AC1E /* Runner */,
+				33CC10EE2044A3C60003C045 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		33CC10EE2044A3C60003C045 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				33CC10ED2044A3C60003C045 /* fixture.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		33FAB671232836740065AC1E /* Runner */ = {
+			isa = PBXGroup;
+			children = (
+				33CC10F02044A3C60003C045 /* AppDelegate.swift */,
+				33E51913231747F40026EE4D /* DebugProfile.entitlements */,
+				33E51914231749380026EE4D /* Release.entitlements */,
+			);
+			path = Runner;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		33CC10EC2044A3C60003C045 /* Runner */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 33CC10FB2044A3C60003C045 /* Build configuration list for PBXNativeTarget "Runner" */;
+			buildPhases = (
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Runner;
+			productName = Runner;
+			productReference = 33CC10ED2044A3C60003C045 /* fixture.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		33CC10E52044A3C60003C045 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 33CC10E82044A3C60003C045 /* Build configuration list for PBXProject "Runner" */;
+			mainGroup = 33CC10E42044A3C60003C045;
+			productRefGroup = 33CC10EE2044A3C60003C045 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				33CC10EC2044A3C60003C045 /* Runner */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		338D0CE9231458BD00FA5F75 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+			};
+			name = Profile;
+		};
+		338D0CEA231458BD00FA5F75 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/DebugProfile.entitlements;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Profile;
+		};
+		33CC10F92044A3C60003C045 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		33CC10FA2044A3C60003C045 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		33CC10FC2044A3C60003C045 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/DebugProfile.entitlements;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		33CC10FD2044A3C60003C045 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = Runner/Release.entitlements;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		33CC10E82044A3C60003C045 /* Build configuration list for PBXProject "Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33CC10F92044A3C60003C045 /* Debug */,
+				33CC10FA2044A3C60003C045 /* Release */,
+				338D0CE9231458BD00FA5F75 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		33CC10FB2044A3C60003C045 /* Build configuration list for PBXNativeTarget "Runner" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				33CC10FC2044A3C60003C045 /* Debug */,
+				33CC10FD2044A3C60003C045 /* Release */,
+				338D0CEA231458BD00FA5F75 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 33CC10E52044A3C60003C045 /* Project object */;
+}

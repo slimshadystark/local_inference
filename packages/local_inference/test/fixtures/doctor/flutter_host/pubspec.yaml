@@ -1,0 +1,22 @@
+name: fixture_app
+description: A host app of the doctor tests (test/doctor/doctor_test.dart). Not a real app; nothing resolves it.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  local_inference_flutter:
+    git:
+      url: git@github.com:example/local-inference.git
+      ref: v-0.1.0
+      path: packages/local_inference_flutter
+
+hooks:
+  user_defines:
+    llamadart:
+      llamadart_native_runtimes: [llama_cpp]
+      llamadart_native_path: natives/v0.4.0

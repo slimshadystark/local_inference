@@ -1,0 +1,193 @@
+{
+  "cases": [
+    {
+      "call": "LlamadartEngine.generationParams()",
+      "derived": {
+        "isSpeculativeDecodingEnabled": false,
+        "resolvedSpeculativeDecodingConfig": null
+      },
+      "name": "a_no_grammar",
+      "params": {
+        "grammar": null,
+        "grammarLazy": false,
+        "grammarRoot": "root",
+        "grammarTriggers": [],
+        "maxTokens": 256,
+        "minP": 0.0,
+        "penalty": 1.0,
+        "presencePenalty": 0.0,
+        "preservedTokens": [],
+        "reusePromptPrefix": true,
+        "seed": 1,
+        "speculativeDecoding": false,
+        "speculativeDecodingConfig": null,
+        "stopSequences": [
+          "<|im_end|>"
+        ],
+        "streamBatchByteThreshold": 512,
+        "streamBatchTokenThreshold": 1,
+        "temp": 0.0,
+        "thinkingBudget": null,
+        "topK": 40,
+        "topP": 0.9
+      },
+      "toString": "Instance of 'GenerationParams'"
+    },
+    {
+      "call": "LlamadartEngine.generationParams(grammar: 'root ::= \"x\"', grammarTriggers: ['<tool_call>'])",
+      "derived": {
+        "isSpeculativeDecodingEnabled": false,
+        "resolvedSpeculativeDecodingConfig": null
+      },
+      "name": "b_lazy_grammar",
+      "params": {
+        "grammar": "root ::= \"x\"",
+        "grammarLazy": true,
+        "grammarRoot": "root",
+        "grammarTriggers": [
+          {
+            "token": null,
+            "type": 0,
+            "value": "<tool_call>"
+          }
+        ],
+        "maxTokens": 256,
+        "minP": 0.0,
+        "penalty": 1.0,
+        "presencePenalty": 0.0,
+        "preservedTokens": [
+          "<think>",
+          "</think>",
+          "<tool_call>",
+          "</tool_call>",
+          "<function=",
+          "</function>",
+          "<parameter=",
+          "</parameter>"
+        ],
+        "reusePromptPrefix": true,
+        "seed": 1,
+        "speculativeDecoding": false,
+        "speculativeDecodingConfig": null,
+        "stopSequences": [
+          "<|im_end|>"
+        ],
+        "streamBatchByteThreshold": 512,
+        "streamBatchTokenThreshold": 1,
+        "temp": 0.0,
+        "thinkingBudget": null,
+        "topK": 40,
+        "topP": 0.9
+      },
+      "toString": "Instance of 'GenerationParams'"
+    },
+    {
+      "call": "LlamadartEngine.generationParams(grammar: 'root ::= \"x\"')",
+      "derived": {
+        "isSpeculativeDecodingEnabled": false,
+        "resolvedSpeculativeDecodingConfig": null
+      },
+      "name": "c_eager_grammar",
+      "params": {
+        "grammar": "root ::= \"x\"",
+        "grammarLazy": false,
+        "grammarRoot": "root",
+        "grammarTriggers": [],
+        "maxTokens": 256,
+        "minP": 0.0,
+        "penalty": 1.0,
+        "presencePenalty": 0.0,
+        "preservedTokens": [
+          "<think>",
+          "</think>",
+          "<tool_call>",
+          "</tool_call>",
+          "<function=",
+          "</function>",
+          "<parameter=",
+          "</parameter>"
+        ],
+        "reusePromptPrefix": true,
+        "seed": 1,
+        "speculativeDecoding": false,
+        "speculativeDecodingConfig": null,
+        "stopSequences": [
+          "<|im_end|>"
+        ],
+        "streamBatchByteThreshold": 512,
+        "streamBatchTokenThreshold": 1,
+        "temp": 0.0,
+        "thinkingBudget": null,
+        "topK": 40,
+        "topP": 0.9
+      },
+      "toString": "Instance of 'GenerationParams'"
+    },
+    {
+      "call": "LlamadartEngine.prefixFillParams",
+      "derived": {
+        "isSpeculativeDecodingEnabled": false,
+        "resolvedSpeculativeDecodingConfig": null
+      },
+      "name": "d_prefix_fill",
+      "params": {
+        "grammar": null,
+        "grammarLazy": false,
+        "grammarRoot": "root",
+        "grammarTriggers": [],
+        "maxTokens": 0,
+        "minP": 0.0,
+        "penalty": 1.1,
+        "presencePenalty": 0.0,
+        "preservedTokens": [],
+        "reusePromptPrefix": true,
+        "seed": null,
+        "speculativeDecoding": false,
+        "speculativeDecodingConfig": null,
+        "stopSequences": [],
+        "streamBatchByteThreshold": 512,
+        "streamBatchTokenThreshold": 8,
+        "temp": 0.0,
+        "thinkingBudget": null,
+        "topK": 40,
+        "topP": 0.9
+      },
+      "toString": "Instance of 'GenerationParams'"
+    }
+  ],
+  "fields": {
+    "GenerationGrammarTrigger": [
+      "type",
+      "value",
+      "token"
+    ],
+    "GenerationParams": [
+      "maxTokens",
+      "temp",
+      "topK",
+      "topP",
+      "minP",
+      "penalty",
+      "presencePenalty",
+      "seed",
+      "stopSequences",
+      "grammar",
+      "grammarLazy",
+      "thinkingBudget",
+      "grammarTriggers",
+      "preservedTokens",
+      "grammarRoot",
+      "speculativeDecoding",
+      "speculativeDecodingConfig",
+      "reusePromptPrefix",
+      "streamBatchTokenThreshold",
+      "streamBatchByteThreshold"
+    ]
+  },
+  "llamadart": "0.8.23",
+  "static_defaults": {
+    "defaultReusePromptPrefix": true,
+    "defaultStreamBatchByteThreshold": 512,
+    "defaultStreamBatchTokenThreshold": 8
+  }
+}

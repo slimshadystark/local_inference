@@ -1,0 +1,37 @@
+name: flutter_chat
+description: A chat app on local_inference_flutter's LocalInferenceChat with two toy tools (the time and unit
+  conversion), for iOS and macOS. An example, not a member of the workspace.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.12.0
+  flutter: '>=3.44.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  local_inference_flutter:    # re-exports local_inference; an app of your own lists local_inference_flutter: ^0.1.0
+    path: ..
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+
+# local_inference_flutter depends on local_inference from pub.dev; inside this repository the example takes the
+# checkout's copy instead.
+dependency_overrides:
+  local_inference:
+    path: ../../local_inference
+
+flutter:
+  uses-material-design: true
+
+# Read by llamadart's build hook from the app's own pubspec: the llama.cpp runtime only, never LiteRT-LM. There is no
+# llamadart_native_path: the example takes the hook's default, a download of the native bundles into the pub cache.
+# After changing this block, run flutter clean.
+hooks:
+  user_defines:
+    llamadart:
+      llamadart_native_runtimes: [llama_cpp]

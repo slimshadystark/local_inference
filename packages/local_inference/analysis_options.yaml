@@ -1,0 +1,22 @@
+include: package:lints/recommended.yaml
+
+formatter:
+  page_width: 120
+
+analyzer:
+  language:
+    strict-raw-types: true
+  errors:
+    # The workspace also resolves flutter, so this is what stops package:flutter in pure code.
+    depend_on_referenced_packages: error
+    implementation_imports: error
+    unawaited_futures: error
+
+linter:
+  rules:
+    - avoid_print
+    - cancel_subscriptions
+    - close_sinks
+    - only_throw_errors
+    - prefer_final_fields
+    - unawaited_futures

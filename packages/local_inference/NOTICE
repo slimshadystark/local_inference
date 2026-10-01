@@ -1,0 +1,110 @@
+local_inference: notices
+
+local_inference is released under the MIT License (LICENSE). This file credits the third-party software local_inference
+depends on at run time, the native libraries that apps built on it bundle, and the models its documentation names, each
+with its license. Every license below was read in the file named with it on 2026-09-30, YaRN's on 2026-10-01.
+
+1. Dart packages used at run time
+
+Versions are those the licenses were read in, resolved with Flutter 3.47.2 on 2026-09-30. A host may resolve other
+versions within the packages' constraints. Each license was read in the package's LICENSE file in the pub cache
+(~/.pub-cache/hosted/pub.dev/<name>-<version>/).
+
+  llamadart 0.8.23          MIT            Copyright (c) 2024 Jhin Lee
+  dinja 1.0.0               MIT            Copyright (c) 2024 Jhin Lee
+  archive 4.3.0             MIT            Copyright (c) 2013-2021 Brendan Duncan
+  async 2.13.1              BSD-3-Clause   Copyright 2015, the Dart project authors
+  code_assets 2.1.0         BSD-3-Clause   Copyright 2025, the Dart project authors
+  collection 1.19.1         BSD-3-Clause   Copyright 2015, the Dart project authors
+  crypto 3.0.7              BSD-3-Clause   Copyright 2015, the Dart project authors
+  ffi 2.2.0                 BSD-3-Clause   Copyright 2019, the Dart project authors
+  hooks 2.2.0               BSD-3-Clause   Copyright 2025, the Dart project authors
+  http 1.6.0                BSD-3-Clause   Copyright 2014, the Dart project authors
+  http_parser 4.1.2         BSD-3-Clause   Copyright 2014, the Dart project authors
+  logging 1.3.0             BSD-3-Clause   Copyright 2013, the Dart project authors
+  meta 1.19.0               BSD-3-Clause   Copyright 2016, the Dart project authors
+  path 1.9.1                BSD-3-Clause   Copyright 2014, the Dart project authors
+  posix 6.5.2               MIT            Copyright (c) 2020 Brett Sutton
+  pub_semver 2.2.1          BSD-3-Clause   Copyright 2014, the Dart project authors
+  record_use 1.1.1          BSD-3-Clause   Copyright 2024, the Dart project authors
+  source_span 1.10.2        BSD-3-Clause   Copyright 2014, the Dart project authors
+  string_scanner 1.4.1      BSD-3-Clause   Copyright 2014, the Dart project authors
+  term_glyph 1.2.2          BSD-3-Clause   Copyright 2017, the Dart project authors
+  typed_data 1.4.0          BSD-3-Clause   Copyright 2015, the Dart project authors
+  web 1.1.1                 BSD-3-Clause   Copyright 2023, the Dart project authors
+  yaml 3.1.4                MIT            Copyright (c) 2014, the Dart project authors;
+                                           Copyright (c) 2006, Kirill Simonov
+
+
+2. Native libraries that apps bundle
+
+llamadart's build hook bundles the prebuilt libraries of leehack/llamadart-native release v0.4.0 (SHA-256 manifest:
+local_inference's tool/native/llamadart-native-v0.4.0.sha256). The archives hold no license file; the licenses below
+were read in the sources those libraries are built from. Their full texts are in local_inference's
+NATIVE_LICENSES.txt: local_inference_flutter registers them with Flutter's LicenseRegistry in every Flutter app built
+on it, and a command-line tool ships the file (local_inference's README, "License and notices").
+
+  llama.cpp v0.4.0, with ggml (its ggml/ folder)
+                            MIT            Copyright (c) 2023-2026 The ggml authors
+      Read in llama.cpp's LICENSE at tag v0.4.0 (commit 5266f24da75dc449bd56cbed7addb9c8e4a6a73e). Every bundle:
+      libllamadart on iOS and macOS; libllamadart, libllama, libggml*, libllama-common and libmtmd on Android and
+      Linux.
+  llamadart-native v0.4.0   MIT            Copyright (c) 2024 Jhin Lee
+      The wrapper that llamadart binds (its llama_dart_* functions), in libllamadart in every bundle. Read in
+      leehack/llamadart-native's LICENSE at tag v0.4.0.
+  nlohmann/json             MIT            Copyright (c) 2013-2025 Niels Lohmann
+      In libllamadart on iOS and macOS and in libllama-common on Android and Linux. Read in llama.cpp v0.4.0's
+      vendor/nlohmann/json.hpp (SPDX header) and licenses/LICENSE-jsonhpp.
+  cpp-httplib               MIT            Copyright (c) 2017 yhirose
+      In the same libraries. Read in llama.cpp v0.4.0's vendor/cpp-httplib/LICENSE.
+  stb_image 2.30            MIT or public domain (Unlicense), at the user's choice; Copyright (c) 2017 Sean Barrett
+      In libllamadart on iOS and macOS and in libmtmd on Android and Linux. Read in llama.cpp v0.4.0's
+      vendor/stb/stb_image.h.
+  rotate-bits               MIT            Copyright (c) 2021 William Casarin
+  SHA-256 by Igor Pavlov    public domain
+      The SHA-256 code of llama.cpp's mtmd library (vendor/hash/sha256, which includes rotate-bits.h), in the same
+      libraries as stb_image. Read in llama.cpp v0.4.0's vendor/hash/sha256/LICENSE and
+      vendor/hash/rotate-bits/LICENSE.md.
+  subprocess.h (sheredom)   public domain (Unlicense)
+  miniaudio 0.11.25         public domain (Unlicense) or MIT No Attribution, Copyright 2026 David Reid
+      Compiled into mtmd by tools/mtmd/mtmd-helper.cpp (miniaudio's decoders only), so in the same libraries as
+      stb_image. Read in llama.cpp v0.4.0's vendor/sheredom/subprocess.h and vendor/miniaudio/miniaudio.h.
+  KleidiAI 1.24.0           Apache-2.0     Copyright Arm Limited and/or its affiliates
+      In the Android arm64 CPU libraries (libggml-cpu-android_*). Read in the release archive
+      kleidiai-v1.24.0-src.tar.gz (LICENSES/Apache-2.0.txt and the SPDX headers of kai/; it has no NOTICE file), the
+      archive llama.cpp v0.4.0 pins (MD5 2f02ebe29573d45813e671eb304f2a00). ggml's glue to it
+      (ggml/src/ggml-cpu/kleidiai/) is MIT, Copyright 2025-2026 Arm Limited and/or its affiliates.
+  YaRN (ggml's rope)        MIT            Copyright (c) 2023 Jeffrey Quesnelle and Bowen Peng
+      ggml's rope operation follows LlamaYaRNScaledRotaryEmbedding.py of github.com/jquesnelle/yarn: its CPU code
+      (ggml/src/ggml-cpu/ops.cpp) is in every bundle, its Metal kernel in libllamadart on iOS and macOS, and its
+      OpenCL kernel in libggml-opencl on Android; the sources of those two kernels, with the copyright line, are in
+      the libraries. Read in llama.cpp v0.4.0's ops.cpp, ggml-metal/kernels/rope.metal and
+      ggml-opencl/kernels/rope.cl, whose comments name the license and the copyright only.
+
+The presence of each component was checked in the vendored libraries' strings on 2026-09-30 (YaRN's copyright line on
+2026-10-01), except miniaudio's decoders, which only llama.cpp's build files show. local_inference's GbnfRecognizer
+(lib/src/testing/) follows the GBNF syntax and limits of llama.cpp's llama-grammar.cpp at v0.4.0.
+
+3. Models the documentation names
+
+The package bundles no model. Each license was read on the model card (the license field of README.md on Hugging Face)
+or in the license file named.
+
+  Qwen3.5-0.8B, Qwen3.5-2B, Qwen3.5-4B (Qwen/Qwen3.5-*; the GGUF files of unsloth/Qwen3.5-*-GGUF)
+                            Apache-2.0     Copyright 2026 Alibaba Cloud
+      Model cards: license apache-2.0 (the unsloth GGUF cards too); Qwen/Qwen3.5-4B's LICENSE file is the Apache
+      License 2.0 with that copyright line. local_inference's testing.dart holds the Qwen3.5 chat template as text
+      (qwen35ChatTemplate, from the Qwen3.5-2B GGUFs), and its test fixtures the 2B and 4B templates.
+  gemma-4-E2B-it (google/gemma-4-E2B-it; the GGUF of unsloth/gemma-4-E2B-it-GGUF)
+                            Apache-2.0
+      Model card: license apache-2.0, license_link https://ai.google.dev/gemma/docs/gemma_4_license, a page that holds
+      the Apache License 2.0 text. local_inference's test fixtures hold its chat template.
+  granite-4.2-3b (ibm-granite/granite-4.2-3b, ibm-granite/granite-4.2-3b-GGUF)
+                            Apache-2.0
+      Model cards: license apache-2.0 (the GGUF repository has no license file).
+  LFM2.5-1.2B-Instruct (LiquidAI/LFM2.5-1.2B-Instruct-GGUF, the file local_inference_flutter's example downloads)
+                            LFM Open License v1.0, Liquid AI, Inc.
+      Read in the repository's LICENSE at commit 8ed288026e23958ad9dfa92d53ed773a8eee7125. Its section 5 makes the
+      rights for commercial use conditional on the licensee not exceeding the Threshold, defined as an annual revenue
+      of 10 million US dollars or more; a qualified non-profit organization is exempt for non-commercial or research
+      purposes. local_inference's test fixtures hold its chat template.

@@ -1,0 +1,7 @@
+<|im_start|>user
+Tell me a short joke.<|im_end|>
+<|im_start|>assistant
+<think>
+
+</think>
+

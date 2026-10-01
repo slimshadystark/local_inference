@@ -1,0 +1,131 @@
+{
+  "comment": "Inputs of tool/render_reference.py, which renders each case with each template into <case>.<template>.txt; test/chat_template_test.dart renders the same cases. tools: names from ../toy_tools.json, in that order.",
+  "templates": {"2b": "chat_template.jinja", "4b": "chat_template_4b.jinja"},
+  "cases": [
+    {
+      "name": "system_user",
+      "tools": [],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "What can you do?"}
+      ]
+    },
+    {
+      "name": "with_tools",
+      "tools": ["get_weather", "create_event", "search_notes", "set_reminder"],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "Will it rain in Zürich tomorrow?"}
+      ]
+    },
+    {
+      "name": "with_history",
+      "tools": ["get_weather", "search_notes"],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "Hi!"},
+        {"role": "assistant", "content": "Hello! How can I help?"},
+        {"role": "user", "content": "Find my notes about the café meeting."}
+      ]
+    },
+    {
+      "name": "tool_calls_reasoning",
+      "tools": ["get_weather", "create_event", "search_notes", "set_reminder"],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "Remind me to call Anna at 6 pm and tell me the weather in Paris."},
+        {
+          "role": "assistant",
+          "content": "",
+          "tool_calls": [
+            {"type": "function", "function": {"name": "set_reminder", "arguments": {"text": "Call Anna", "at": "2026-09-29T18:00:00Z", "repeat": false}}},
+            {"type": "function", "function": {"name": "get_weather", "arguments": {"city": "Paris", "days": 1}}}
+          ],
+          "reasoning_content": "Two requests: a reminder, then the weather."
+        },
+        {"role": "tool", "content": "{\"ok\": true}", "name": "set_reminder"},
+        {"role": "tool", "content": "{\"forecast\": \"sunny\", \"max\": 21}", "name": "get_weather"}
+      ]
+    },
+    {
+      "name": "tool_messages",
+      "tools": ["get_weather", "search_notes"],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "Any notes from this week?"},
+        {
+          "role": "assistant",
+          "content": "Let me check.",
+          "tool_calls": [
+            {"type": "function", "function": {"name": "search_notes", "arguments": {"query": "notes", "period": "this_week", "limit": 3}}}
+          ]
+        },
+        {"role": "tool", "content": "[\"Budget 2027\", \"Trip to Lyon\"]"},
+        {"role": "assistant", "content": "Two notes: Budget 2027 and Trip to Lyon."},
+        {"role": "user", "content": "Open the second."}
+      ]
+    },
+    {
+      "name": "no_tools",
+      "tools": [],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "user", "content": "Tell me a short joke."}
+      ]
+    },
+    {
+      "name": "thinking_off",
+      "tools": ["search_notes"],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "How many notes do I have?"},
+        {"role": "assistant", "content": "You have 12 notes.", "reasoning_content": "Counted them."},
+        {"role": "user", "content": "And tagged work?"}
+      ]
+    },
+    {
+      "name": "thinking_on",
+      "tools": [],
+      "variables": {"enable_thinking": true},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "What can you do?"}
+      ]
+    },
+    {
+      "name": "thinking_default",
+      "tools": [],
+      "variables": {},
+      "add_generation_prompt": true,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "What can you do?"}
+      ]
+    },
+    {
+      "name": "no_generation_prompt",
+      "tools": ["get_weather"],
+      "variables": {"enable_thinking": false},
+      "add_generation_prompt": false,
+      "messages": [
+        {"role": "system", "content": "You are a helpful assistant. Answer briefly."},
+        {"role": "user", "content": "Weather in Oslo?"},
+        {"role": "assistant", "content": "Cold and clear."}
+      ]
+    }
+  ]
+}

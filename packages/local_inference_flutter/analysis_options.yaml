@@ -1,0 +1,21 @@
+include: package:flutter_lints/flutter.yaml
+
+formatter:
+  page_width: 120
+
+analyzer:
+  language:
+    strict-raw-types: true
+  errors:
+    depend_on_referenced_packages: error
+    implementation_imports: error
+    unawaited_futures: error
+  exclude:
+    - build/**
+    - android/**
+
+linter:
+  rules:
+    - cancel_subscriptions
+    - close_sinks
+    - unawaited_futures

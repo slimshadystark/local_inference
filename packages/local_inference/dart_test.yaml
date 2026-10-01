@@ -1,0 +1,7 @@
+tags:
+  # Real-model tests (test/model_test.dart), skipped unless LI_TEST_MODEL names a GGUF:
+  #   LI_TEST_MODEL=/abs/path/model.gguf dart test -t model
+  model:
+  # The model-family tests (test/family_test.dart), one GGUF per run; run them once per model:
+  #   LI_TEST_MODEL=/abs/path/model.gguf LI_TEST_REPORT=/abs/path/report.json dart test -t family
+  family:

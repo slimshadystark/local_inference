@@ -1,0 +1,55 @@
+name: local_inference_flutter
+description: >-
+  Flutter layer of local_inference: a customizable chat UI, model setup, background model download and a device
+  plugin for on-device LLM chat on iOS, Android and macOS.
+version: 0.1.0
+repository: https://github.com/slimshadystark/local_inference/tree/main/packages/local_inference_flutter
+issue_tracker: https://github.com/slimshadystark/local_inference/issues
+resolution: workspace
+topics:
+  - llm
+  - llama-cpp
+  - on-device-ai
+  - ai
+  - chat
+
+environment:
+  sdk: ^3.12.0
+  flutter: '>=3.44.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  local_inference: ^0.1.0
+  background_downloader: '>=9.5.9 <9.7.0'
+  meta: ^1.18.0
+  path: ^1.9.1
+  path_provider: ^2.1.6
+
+dev_dependencies:
+  crypto: ^3.0.7
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  path_provider_platform_interface: ^2.1.2
+  plugin_platform_interface: ^2.1.8
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: it.asfweb.local_inference_flutter
+        pluginClass: LocalInferenceFlutterPlugin
+        dartPluginClass: NativeLicenses
+      ios:
+        pluginClass: LocalInferenceFlutterPlugin
+        dartPluginClass: NativeLicenses
+        sharedDarwinSource: true
+      linux:
+        dartPluginClass: NativeLicenses
+      macos:
+        pluginClass: LocalInferenceFlutterPlugin
+        dartPluginClass: NativeLicenses
+        sharedDarwinSource: true
+      windows:
+        dartPluginClass: NativeLicenses

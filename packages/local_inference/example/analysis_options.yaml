@@ -1,0 +1,12 @@
+include: package:lints/recommended.yaml
+
+formatter:
+  page_width: 120
+
+analyzer:
+  errors:
+    unawaited_futures: error
+
+linter:
+  rules:
+    - unawaited_futures

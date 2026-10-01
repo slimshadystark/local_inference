@@ -1,0 +1,6 @@
+<|im_start|>system
+You are a helpful assistant. Answer briefly.<|im_end|>
+<|im_start|>user
+What can you do?<|im_end|>
+<|im_start|>assistant
+<think>

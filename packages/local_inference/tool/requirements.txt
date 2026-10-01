@@ -1,0 +1,4 @@
+# tool/.venv: the jinja2 reference renderer (render_reference.py), with the versions that rendered
+# test/fixtures/reference: python3 -m venv tool/.venv && tool/.venv/bin/pip install -r tool/requirements.txt
+jinja2==3.1.6
+markupsafe==3.0.3

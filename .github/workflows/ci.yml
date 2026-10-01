@@ -1,0 +1,68 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  # Format, analysis, tests and the README snippets on the Flutter version of .fvmrc.
+  main:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.47.2
+          cache: true
+      - run: flutter pub get
+      - name: format
+        run: dart format --line-length 120 --set-exit-if-changed packages/local_inference/lib packages/local_inference/test packages/local_inference_flutter/lib packages/local_inference_flutter/test
+      - name: analyze local_inference
+        working-directory: packages/local_inference
+        run: dart analyze --fatal-infos
+      - name: analyze local_inference_flutter
+        working-directory: packages/local_inference_flutter
+        run: flutter analyze --fatal-infos
+      - name: test local_inference
+        working-directory: packages/local_inference
+        run: dart test
+      - name: test local_inference_flutter
+        working-directory: packages/local_inference_flutter
+        run: flutter test
+      - name: README snippets
+        run: dart run tool/ci/snippets.dart
+      - name: publish dry runs
+        run: |
+          (cd packages/local_inference && dart pub publish --dry-run)
+          (cd packages/local_inference_flutter && flutter pub publish --dry-run)
+
+  # The lowest Flutter the Flutter package supports.
+  min-flutter:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.8
+      - run: flutter pub get
+      - working-directory: packages/local_inference_flutter
+        run: flutter test
+
+  # The lowest Dart the pure package supports.
+  min-dart:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.10.7
+      - name: test local_inference alone
+        working-directory: packages/local_inference
+        run: |
+          # Outside the workspace (whose root needs a newer Dart for the Flutter member).
+          sed -i '/^resolution: workspace/d' pubspec.yaml
+          printf 'hooks:\n  user_defines:\n    llamadart:\n      llamadart_native_runtimes: [llama_cpp]\n' >> pubspec.yaml
+          dart pub get
+          dart analyze --fatal-infos
+          dart test

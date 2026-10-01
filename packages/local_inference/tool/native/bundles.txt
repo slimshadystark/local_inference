@@ -1,0 +1,12 @@
+# llamadart-native v0.4.0 bundles that fetch_llamadart_native.sh vendors by default, one per line, in the upstream
+# naming (llamadart-native-<bundle>-v0.4.0.tar.gz). The hook picks one per build target:
+# llamadart 0.8.23 lib/src/hook/native_bundle_config.dart:276-345.
+macos-arm64
+macos-x86_64
+ios-arm64
+ios-arm64-sim
+android-arm64
+android-x64
+linux-x64
+# Also published for v0.4.0, not vendored: ios-x86_64-sim, linux-arm64, windows-arm64, windows-x64.
+# A build for one of them fails on the guard file (README.md) until it is added here and to the manifest.

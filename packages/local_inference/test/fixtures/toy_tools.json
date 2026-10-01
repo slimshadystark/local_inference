@@ -1,0 +1,83 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "get_weather",
+      "description": "Current weather and forecast for a city.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "city": {"type": "string", "description": "City name, for example Zürich."},
+          "unit": {"type": "string", "enum": ["celsius", "fahrenheit"], "description": "Temperature unit."},
+          "days": {"type": "integer", "minimum": 1, "maximum": 7, "description": "Days of forecast."}
+        },
+        "required": ["city"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "create_event",
+      "description": "Adds an event to the calendar – ask before inviting anyone.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {"type": "string", "description": "Short title."},
+          "when": {
+            "type": "object",
+            "properties": {
+              "date": {"type": "string", "format": "date", "description": "YYYY-MM-DD"},
+              "hour": {"type": "integer", "minimum": 0, "maximum": 23}
+            },
+            "required": ["date"],
+            "description": "Day and optional hour."
+          },
+          "attendees": {"type": "array", "items": {"type": "string"}, "maxItems": 10, "description": "E-mail addresses."},
+          "reminder_minutes": {"type": "integer", "minimum": 5, "maximum": 120}
+        },
+        "required": ["title", "when"],
+        "additionalProperties": false
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "search_notes",
+      "description": "Searches the user's notes by text, period and tags.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "query": {"type": "string", "description": "Words to look for."},
+          "period": {
+            "anyOf": [
+              {"type": "string", "enum": ["today", "this_week", "this_month"]},
+              {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}$"}
+            ],
+            "description": "A named period or a month (YYYY-MM)."
+          },
+          "limit": {"type": "integer", "minimum": 1, "maximum": 12},
+          "tags": {"type": "array", "items": {"type": "string", "enum": ["work", "home", "travel"]}}
+        },
+        "required": ["query"]
+      }
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "set_reminder",
+      "description": "Sets a reminder, e.g. “pay the rent at the café”.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "text": {"type": "string", "description": "What to remind."},
+          "at": {"type": "string", "format": "date-time", "description": "When, RFC 3339."},
+          "repeat": {"type": "boolean"}
+        },
+        "required": ["text", "at"]
+      }
+    }
+  }
+]

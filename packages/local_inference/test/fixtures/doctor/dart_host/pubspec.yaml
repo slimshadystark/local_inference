@@ -1,0 +1,15 @@
+name: fixture_cli
+description: A pure-Dart host of the doctor tests (test/doctor/doctor_test.dart). Not a real package; nothing resolves
+  it.
+publish_to: none
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  local_inference: ^0.1.0
+
+hooks:
+  user_defines:
+    llamadart:
+      llamadart_native_runtimes: [llama_cpp]

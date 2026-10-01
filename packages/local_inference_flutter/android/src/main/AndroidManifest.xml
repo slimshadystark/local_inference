@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Merged into the host app. The model download (BackgroundModelDownloader, background_downloader) needs the
+         network, its progress notification, and on Android 14+ user-initiated data transfer jobs, which
+         background_downloader's own manifest does not request. A foreground service is opt-in: a host that
+         wants it adds FOREGROUND_SERVICE and FOREGROUND_SERVICE_DATA_SYNC itself (README, "Host setup"). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.RUN_USER_INITIATED_JOBS" />
+</manifest>

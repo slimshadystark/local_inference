@@ -1,0 +1,17 @@
+# Local tooling and large files
+/.tools
+/.natives
+/.fvm/
+*.gguf
+.DS_Store
+
+# Dart and Flutter build output
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+pubspec_overrides.yaml
+**/.swiftpm/
+
+# Lock files: a library repository does not pin its users' versions
+pubspec.lock
