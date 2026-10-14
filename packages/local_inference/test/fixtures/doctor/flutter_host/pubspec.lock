@@ -1,0 +1,53 @@
+# The lock of an app that takes the packages from one git repository at the tag v-0.1.0 (trimmed): local_inference
+# comes in once, at the tag's commit.
+packages:
+  background_downloader:
+    dependency: transitive
+    description:
+      name: background_downloader
+      sha256: "0000000000000000000000000000000000000000000000000000000000000001"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.6.2"
+  dinja:
+    dependency: transitive
+    description:
+      name: dinja
+      sha256: "0000000000000000000000000000000000000000000000000000000000000002"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  flutter:
+    dependency: "direct main"
+    description: flutter
+    source: sdk
+    version: "0.0.0"
+  llamadart:
+    dependency: transitive
+    description:
+      name: llamadart
+      sha256: "0000000000000000000000000000000000000000000000000000000000000003"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.8.23"
+  local_inference:
+    dependency: transitive
+    description:
+      path: "packages/local_inference"
+      ref: "1111111111111111111111111111111111111111"
+      resolved-ref: "1111111111111111111111111111111111111111"
+      url: "git@github.com:example/local-inference.git"
+    source: git
+    version: "0.1.0"
+  local_inference_flutter:
+    dependency: "direct main"
+    description:
+      path: "packages/local_inference_flutter"
+      ref: "v-0.1.0"
+      resolved-ref: "1111111111111111111111111111111111111111"
+      url: "git@github.com:example/local-inference.git"
+    source: git
+    version: "0.1.0"
+sdks:
+  dart: ">=3.12.0 <4.0.0"
+  flutter: ">=3.44.0"
