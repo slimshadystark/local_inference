@@ -32,9 +32,15 @@ jobs:
         run: flutter test
       - name: README snippets
         run: dart run tool/ci/snippets.dart
+      # pub exits with an error on any warning. local_inference has one known warning, its exact llamadart pin
+      # (prompts and native bundles depend on that build): it passes when that is its only warning.
       - name: publish dry runs
         run: |
-          (cd packages/local_inference && dart pub publish --dry-run)
+          out=$(cd packages/local_inference && dart pub publish --dry-run 2>&1) || true
+          echo "$out"
+          if ! echo "$out" | grep -q 'Package has 0 warnings'; then
+            echo "$out" | grep -q 'Package has 1 warning' && echo "$out" | grep -q 'dependency on "llamadart" should allow more than one version'
+          fi
           (cd packages/local_inference_flutter && flutter pub publish --dry-run)
 
   # The lowest Flutter the Flutter package supports.
