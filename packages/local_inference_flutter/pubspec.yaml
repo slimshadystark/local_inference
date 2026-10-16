@@ -24,6 +24,13 @@ screenshots:
   - description: 'A built-in AI disclosure banner and an in-app report sheet for replies.'
     path: screenshots/5_disclosure_and_reports.png
 
+# The platforms pub.dev lists: those of the device plugin (android/, darwin/). On Linux and Windows the plugin only
+# registers the native licenses (NativeLicenses); those platforms are not tested.
+platforms:
+  android:
+  ios:
+  macos:
+
 environment:
   sdk: ^3.12.0
   flutter: '>=3.44.0'

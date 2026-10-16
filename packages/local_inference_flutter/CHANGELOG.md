@@ -8,6 +8,8 @@ Documentation and package page only: no API or behavior changes.
   screenshots.
 - The example's README (the Example tab) has the commands to run it and the code of the chat.
 - A shorter description; the topics are `llm`, `ai`, `chat`, `agents` and `on-device`.
+- pub.dev lists the platforms of the device plugin: Android, iOS and macOS (`platforms:`). The plugin still registers
+  the native licenses on Linux and Windows.
 
 ## 0.1.0
 

@@ -16,6 +16,13 @@ screenshots:
   - description: 'li_chat, the example: a terminal chat whose model calls two tools, the time and a calculator.'
     path: screenshots/terminal.png
 
+# The platforms with a llama.cpp bundle in tool/native/bundles.txt (Linux: built, not yet run). Windows has none.
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+
 environment:
   sdk: ^3.10.7
 

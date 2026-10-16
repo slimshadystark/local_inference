@@ -9,6 +9,8 @@ Documentation and package page only: no API or behavior changes.
 - The example's README (the Example tab) has the commands to run it with a model download, the streaming loop and how
   to ship a standalone build.
 - A shorter description; the topics are `llm`, `ai`, `agents`, `on-device` and `llama-cpp`.
+- pub.dev lists the platforms that have a llama.cpp bundle: Android, iOS, Linux and macOS (`platforms:`). Windows has
+  none.
 
 ## 0.1.0
 
