@@ -1,9 +1,88 @@
 # local_inference_flutter
 
-The Flutter layer of [local_inference](https://pub.dev/packages/local_inference): a chat UI you customize, the
-model-setup UI, background model download, Listenable adapters and a device-probe plugin (iOS, Android, macOS). It
-re-exports local_inference, so an app depends on this package alone. The package's `example/` folder holds a runnable
-chat app with two tools.
+[![pub package](https://img.shields.io/pub/v/local_inference_flutter.svg)](https://pub.dev/packages/local_inference_flutter)
+[![pub points](https://img.shields.io/pub/points/local_inference_flutter)](https://pub.dev/packages/local_inference_flutter/score)
+[![CI](https://github.com/slimshadystark/local_inference/actions/workflows/ci.yml/badge.svg)](https://github.com/slimshadystark/local_inference/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/slimshadystark/local_inference/blob/main/LICENSE)
+
+**On-device AI chat and agents for Flutter.** Drop in a chat that runs an LLM on the phone: replies stream in, the
+model calls your tools on its own, and it asks before it does anything that matters. Or build your own UI on the
+same controllers. Offline, private, no API key.
+
+![Tool calling, a confirmation before an action, and a custom theme](https://raw.githubusercontent.com/slimshadystark/local_inference/main/doc/hero.png)
+
+*The kit's own widgets with a scripted model, drawn by [tool/screenshots](https://github.com/slimshadystark/local_inference/tree/main/packages/local_inference_flutter/tool/screenshots).*
+
+## Why local_inference_flutter
+
+- **A whole chat in one widget.** `LocalInferenceChat` asks before downloading the model, downloads it in the
+  background, checks it, loads it and chats. Restyle it with a theme extension, translate it, or replace any piece
+  with a builder.
+- **Agents with your tools.** Declare a tool in a few lines; the model calls it, the UI shows what it is doing, and
+  tools that change something wait for the user's yes.
+- **Downloads that survive real life.** Background downloads on iOS and Android that resume after the app is killed,
+  Wi-Fi-only by default, SHA-256 verification, and checks that the phone has the memory and the disk.
+- **Ready for the stores.** An AI-disclosure banner and "report this reply" (the EU AI Act, Google Play's AI
+  policy), screen-reader announcements, 48-point targets, text scaling and right-to-left layouts.
+- **Measured on phones.** A fine-tuned Qwen3.5 2B streams 12-20 tokens per second on an iPhone 16 Pro Max, and a
+  tool-calling turn takes 1-3 seconds.
+- **Your architecture.** One widget, pages over controllers you keep, or headless Listenables for Riverpod, BLoC or
+  anything else. Built on [local_inference](https://pub.dev/packages/local_inference) (pure Dart), re-exported.
+- **A doctor for your host.** `dart run local_inference_flutter:doctor` checks the iOS, Android and macOS settings an
+  on-device model needs and says how to fix each.
+
+## Quick start
+
+1. `flutter pub add local_inference_flutter`
+2. Add llamadart's hooks block to your app's `pubspec.yaml` (it keeps a second runtime out of the app):
+
+   ```yaml
+   hooks:
+     user_defines:
+       llamadart:
+         llamadart_native_runtimes: [llama_cpp]
+   ```
+3. Put a chat on screen: a weather tool, a model manifest, one widget.
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:local_inference_flutter/local_inference_flutter.dart';
+
+final weather = AssistantConfig.basic(
+  systemPrompt: 'You tell the weather in a few words.',
+  tools: [
+    AssistantTool(
+      name: 'weather',
+      description: 'The weather in a city.',
+      parameters: ToolSchema.object({'city': ToolSchema.string()}, required: ['city']),
+      statusLabel: 'Checking the weather...',
+      run: (call, context) => ToolResult.ok({'city': call.string('city'), 'sky': 'sunny'}),
+    ),
+  ],
+);
+
+Future<void> oneWidget() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LocalInferenceFlutter.installDownloaderStorage();
+  runApp(
+    MaterialApp(
+      home: LocalInferenceChat(
+        config: weather,
+        model: ModelOrigin.manifest(Uri.parse('https://example.org/models/manifest.json')),
+        assistantName: 'Helper',
+        welcome: 'Hi! Ask me about the weather.',
+        suggestions: const ['Weather in Rome?'],
+      ),
+    ),
+  );
+}
+```
+
+4. Run `dart run local_inference_flutter:doctor --strict` and follow its fixes (iOS 16.4, the memory entitlement, …);
+   "Host setup" below lists them.
+
+The package's `example/` folder is a complete app with two tools that downloads LFM2.5-1.2B (696 MB) from Hugging Face:
+`flutter run` in `example/` on an iPhone, an Android phone or a Mac.
 
 ## Install
 
@@ -247,39 +326,8 @@ loads the model by itself. `model` is `ModelOrigin.manifest(url)` (a manifest yo
 local_inference's README, "Model manifest"), `ModelOrigin.catalog(catalog)` or `ModelOrigin.file(path)`; it is read
 once (for another model, give the widget a new key). A new `config` reaches the assistant after the turn under way.
 
-```dart
-import 'package:flutter/material.dart';
-import 'package:local_inference_flutter/local_inference_flutter.dart';
+The example is the quick start's, at the top of this page.
 
-final weather = AssistantConfig.basic(
-  systemPrompt: 'You tell the weather in a few words.',
-  tools: [
-    AssistantTool(
-      name: 'weather',
-      description: 'The weather in a city.',
-      parameters: ToolSchema.object({'city': ToolSchema.string()}, required: ['city']),
-      statusLabel: 'Checking the weather...',
-      run: (call, context) => ToolResult.ok({'city': call.string('city'), 'sky': 'sunny'}),
-    ),
-  ],
-);
-
-Future<void> oneWidget() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await LocalInferenceFlutter.installDownloaderStorage();
-  runApp(
-    MaterialApp(
-      home: LocalInferenceChat(
-        config: weather,
-        model: ModelOrigin.manifest(Uri.parse('https://example.org/models/manifest.json')),
-        assistantName: 'Helper',
-        welcome: 'Hi! Ask me about the weather.',
-        suggestions: const ['Weather in Rome?'],
-      ),
-    ),
-  );
-}
-```
 
 - **Languages.** The UI kit's texts follow the app's locale: Italian for `it`, English for any other
   (`LocalInferenceLocalizations.delegate` adds them to the app's localizations; `LocalInferenceScope(strings:)`

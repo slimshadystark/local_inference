@@ -1,14 +1,67 @@
 # local_inference
 
-On-device LLM inference for Dart and Flutter, in pure Dart: the llama.cpp engine (through llamadart), chat templates,
-tool calling with GBNF grammars, a tool-using assistant, a prefix-state cache and verified model delivery.
+[![pub package](https://img.shields.io/pub/v/local_inference.svg)](https://pub.dev/packages/local_inference)
+[![pub points](https://img.shields.io/pub/points/local_inference)](https://pub.dev/packages/local_inference/score)
+[![CI](https://github.com/slimshadystark/local_inference/actions/workflows/ci.yml/badge.svg)](https://github.com/slimshadystark/local_inference/actions/workflows/ci.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/slimshadystark/local_inference/blob/main/LICENSE)
 
-- `local_inference` (this package, pure Dart): the engine, the model layer, the assistant, model delivery, the testing
-  kit and the host doctor.
-- [local_inference_flutter](https://pub.dev/packages/local_inference_flutter): the Flutter layer (a chat UI, the model
-  setup, background download, a device plugin). It re-exports this package, so a Flutter app depends on it alone.
+**Run LLMs and AI agents on the device, in pure Dart.** GGUF models through llama.cpp, tool calls that come out
+well-formed even from small models, an agent loop that runs your tools and asks before it acts, and model downloads
+that resume and verify. No server and no API key: the prompts and the data stay on the device.
 
-The package's `example/` folder holds a terminal chat in pure Dart with two tools.
+![A terminal chat whose model calls a calculator: Qwen3.5-2B on a laptop, a real session](https://raw.githubusercontent.com/slimshadystark/local_inference/main/packages/local_inference/screenshots/terminal.png)
+
+## Why local_inference
+
+- **Agents with your own tools.** Describe a tool with a JSON Schema in a few lines; the assistant calls it, checks
+  the arguments, runs it and answers from the result. A grammar built from your schemas keeps tool calls valid, so
+  even 1-4B models make calls your code can trust.
+- **It asks before it acts.** Tools that change something wait for the user's yes, and "cancel the second one"
+  means the second item of the list the user saw, not a guess.
+- **Fast turns.** The system prompt and the tools are processed once and saved; later turns restore them in a
+  fraction of a second instead of reading them again.
+- **Several model families.** Qwen3.5 (validated, prompts checked byte for byte), Gemma 4, LFM2.5, Granite 4 and
+  the other chat formats llama.cpp knows, best effort; plain chat for any GGUF model.
+- **Models delivered properly.** A manifest with each file's size and SHA-256, resumable downloads, and checks that
+  the device has the memory and disk a model needs.
+- **Dart everywhere.** Flutter apps (with [local_inference_flutter](https://pub.dev/packages/local_inference_flutter)
+  for a ready chat UI), command-line tools and servers (`dart build cli`).
+- **Testable without a model.** A scripted engine runs your assistant in unit tests, in milliseconds.
+
+## An agent in 20 lines
+
+```dart
+import 'package:local_inference/local_inference.dart';
+
+Future<void> main(List<String> args) async {
+  final assistant = Assistant(
+    AssistantConfig.basic(
+      systemPrompt: 'You are a helpful assistant. Use the tools when they help.',
+      tools: [
+        AssistantTool(
+          name: 'get_weather',
+          description: 'The weather forecast for a city.',
+          parameters: ToolSchema.object({'city': ToolSchema.string()}, required: ['city']),
+          statusLabel: 'Checking the weather...',
+          run: (call, context) => ToolResult.ok({'city': call.string('city'), 'forecast': 'sunny, 24 °C'}),
+        ),
+      ],
+    ),
+  );
+  await assistant.loadModel(args.first); // a GGUF file, e.g. Qwen3.5-2B-Q4_0.gguf
+  final outcome = await assistant.send('What is the weather in Rome tomorrow?');
+  print(outcome.reply); // the model called get_weather and answered from its result
+  await assistant.dispose();
+}
+```
+
+Run it with `dart run`, after the two steps of "Install" below. The package's `example/` folder holds a complete
+terminal chat with two tools.
+
+| Package | For |
+|---|---|
+| `local_inference` (this one, pure Dart) | the engine, chat templates and tool calls, the assistant, model delivery, a testing kit, a host doctor |
+| [local_inference_flutter](https://pub.dev/packages/local_inference_flutter) | Flutter: a customizable chat UI in one widget, model setup and download screens, background downloads, device checks. It re-exports this package. |
 
 ## Install
 

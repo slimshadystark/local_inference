@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.1
+
+Documentation and package page only: no API or behavior changes.
+
+- The README opens with what the package does, an agent with a tool in 20 lines, a terminal screenshot and the
+  package table.
+- The example's README (the Example tab) has the commands to run it with a model download, the streaming loop and how
+  to ship a standalone build.
+- A shorter description; the topics are `llm`, `ai`, `agents`, `on-device` and `llama-cpp`.
+
 ## 0.1.0
 
 Initial release.

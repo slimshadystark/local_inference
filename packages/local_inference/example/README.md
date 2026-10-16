@@ -1,16 +1,66 @@
-# li_chat
+# li_chat: a terminal AI agent in pure Dart
 
-A terminal chat with a GGUF model through `local_inference`, in pure Dart: an `Assistant` (`AssistantConfig.basic`)
-with two tools, the time (`get_time`) and a calculator (`calculate`, lib/calculator.dart). The model calls them and
-writes the reply from their results (`ModelWrittenReplies`, the default). The tools need a model whose family has a
-tool-call format that `ModelProfile.detect` knows (Qwen3.5, or one of llamadart's formats with tool calls: Gemma 4,
-LFM2, Llama 3.x, Mistral, Granite, …); any other chat model (Gemma 3, Phi-4, …) is refused at load, naming its
-template family, and chats with `--no-tools`.
+A chat with a local LLM in your terminal, with two tools the model calls on its own: the clock (`get_time`) and a
+calculator (`calculate`). It is one Dart process with llama.cpp inside: no server, no API key, no Python, and nothing
+leaves the computer.
 
-The example is an app of its own, not a member of the repository's workspace: it depends on the package by path and
-carries its own hooks block (`llamadart_native_runtimes: [llama_cpp]`, no native path), so llamadart's build hook
-downloads the llama.cpp bundle into the pub cache the first time. An app of your own lists the package from pub.dev,
-with the same hooks block (local_inference's README, "Install"):
+![li_chat: the model calls the calculator and answers from its result](https://raw.githubusercontent.com/slimshadystark/local_inference/main/packages/local_inference/screenshots/terminal.png)
+
+## Run it
+
+```sh
+git clone https://github.com/slimshadystark/local_inference
+cd local_inference/packages/local_inference/example
+dart pub get
+curl -LO https://huggingface.co/unsloth/Qwen3.5-2B-GGUF/resolve/f6d5376be1edb4d416d56da11e5397a961aca8ae/Qwen3.5-2B-Q4_0.gguf
+dart run bin/li_chat.dart --model Qwen3.5-2B-Q4_0.gguf    # /new starts over, /quit leaves
+```
+
+The first `dart run` also downloads the llama.cpp libraries for your computer into the pub cache, once (llamadart's
+build hook). The model above is Qwen3.5-2B in Q4_0 (1.2 GB, Apache 2.0), from Unsloth's Hugging Face repository.
+Any GGUF chat model of a family with tool calls works: Qwen3.5, Gemma 4, LFM2, Granite 4, Llama 3.x, Mistral and
+others. local_inference's README, "Compatibility", lists the ones measured, with their speed.
+
+## How it works
+
+`bin/li_chat.dart` builds an `Assistant` with `AssistantConfig.basic` and the two tools, as in local_inference's
+README ("An agent in 20 lines"). Then it streams each turn: the reply token by token, and each tool call when it
+finishes.
+
+```dart
+import 'dart:io';
+
+import 'package:local_inference/local_inference.dart';
+
+Future<void> ask(Assistant assistant, String question) async {
+  final turn = assistant.sendStreaming(question);
+  await Future.wait([
+    turn.text.forEach(stdout.write), // the reply, as the model writes it
+    turn.events.forEach((event) {
+      if (event case ToolFinishedEvent(:final outcome)) {
+        stdout.writeln('[${outcome.call} -> ${encodeToolResult(outcome)}]'); // a tool call and its result
+      }
+    }),
+  ]);
+  final outcome = await turn.outcome;
+  if (outcome.error != null) stderr.writeln(outcome.error);
+}
+```
+
+Each model family writes tool calls in its own format, and the model's profile reads it; with Qwen3.5, a grammar also
+keeps the call well-formed. The assistant checks each call against the tool's schema before it runs the tool.
+
+## Ship it
+
+```sh
+dart build cli -o build/cli
+build/cli/bundle/bin/li_chat --model Qwen3.5-2B-Q4_0.gguf
+```
+
+Ship `build/cli/bundle/` whole. The executable loads llama.cpp from `bundle/lib/`; `dart compile exe` cannot bundle
+native libraries. Ship local_inference's `NATIVE_LICENSES.txt` with it: it holds the notices of those libraries.
+
+## In your own app
 
 ```yaml
 dependencies:
@@ -22,18 +72,15 @@ hooks:
       llamadart_native_runtimes: [llama_cpp]
 ```
 
-```sh
-dart pub get                                                        # in packages/local_inference/example
-dart run bin/li_chat.dart --model /path/to/model.gguf               # chat: /new, /quit
-dart build cli -o build/cli && build/cli/bundle/bin/li_chat --version   # a standalone build (bundle/lib: the natives)
-dart run local_inference:doctor --strict                            # the host check (--help lists the options)
-```
+The hooks block goes in the app's own `pubspec.yaml`. It keeps llamadart to the llama.cpp runtime; without it,
+llamadart also bundles LiteRT-LM. `dart run local_inference:doctor` checks the setup and says how to fix what is
+missing.
 
-`li_chat --help` lists the options (`--system`, `--max-tokens`, `--no-tools`). Ship `build/cli/bundle/` whole: the
-executable loads the llama.cpp libraries from `bundle/lib/` (`dart compile exe` cannot bundle them). Ship
-local_inference's `NATIVE_LICENSES.txt` with it: the notices of those libraries (local_inference's README, "License
-and notices"). `dart test` runs the calculator's tests.
+## Options
 
-The models of local_inference's compatibility table work here (local_inference's README, "Compatibility"); none is
-bundled. Each model has its own license: check it before you ship one (local_inference's NOTICE lists the ones its
-docs name).
+- `li_chat --help` lists them: `--system`, `--max-tokens`, `--no-tools`.
+- A chat model with no tool-call format (Gemma 3, Phi-4, …) is refused at load, and the message names its template
+  family. `--no-tools` chats with it.
+- `dart test` runs the calculator's tests.
+
+No model is bundled. Each model has its own license: check it before you ship one.

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.1
+
+Documentation and package page only: no API or behavior changes.
+
+- The README opens with what the package does, a quick start (one widget, the hooks block, the doctor) and
+  screenshots.
+- The example's README (the Example tab) has the commands to run it and the code of the chat.
+- A shorter description; the topics are `llm`, `ai`, `chat`, `agents` and `on-device`.
+
 ## 0.1.0
 
 Initial release.

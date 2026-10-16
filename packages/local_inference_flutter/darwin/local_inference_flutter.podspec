@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'local_inference_flutter'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'Device probe of local_inference_flutter: memory, disk, SHA-256, backup flag, diagnostics.'
   s.description      = <<-DESC
 Memory and disk figures, the SHA-256 of a downloaded model, its exclusion from backups, and a diagnostics

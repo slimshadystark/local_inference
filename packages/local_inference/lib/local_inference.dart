@@ -1,4 +1,9 @@
-/// On-device LLM inference for Dart: the engine, model families, the tool-using assistant and model delivery.
+/// Run LLMs and AI agents on the device, in pure Dart: GGUF models through llama.cpp, tool calling, an agent loop
+/// with your own tools, and verified model downloads. Offline and private.
+///
+/// Where to start: an [Assistant] with [AssistantConfig.basic] and a few [AssistantTool]s is an agent in twenty
+/// lines; a [ChatModel] answers single calls with tools; a [ModelManager] downloads and checks the model files. The
+/// package's testing library (`package:local_inference/testing.dart`) runs all of it without a model.
 ///
 /// L1, the engine: an [InferenceEngine] takes a rendered prompt and streams text; [LlamadartEngine] runs it on
 /// llama.cpp. L2, the model layer: a [ChatModel] renders [ChatMessage]s with the model's template, holds tool calls

@@ -1,0 +1,2 @@
+# The screenshot generator stays in the repository; the package ships its output (screenshots/).
+/tool/screenshots/

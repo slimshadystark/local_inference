@@ -1,17 +1,20 @@
 name: local_inference
 description: >-
-  On-device LLM inference in pure Dart on llama.cpp: chat templates, tool calling with GBNF grammars, a tool-using
-  assistant and verified model downloads.
-version: 0.1.0
+  Run LLMs and AI agents on device in Dart: GGUF models via llama.cpp, tool calling, an agent loop with your own
+  tools, verified downloads. Offline and private.
+version: 0.1.1
 repository: https://github.com/slimshadystark/local_inference/tree/main/packages/local_inference
 issue_tracker: https://github.com/slimshadystark/local_inference/issues
 resolution: workspace
 topics:
   - llm
-  - llama-cpp
-  - on-device-ai
   - ai
-  - tool-calling
+  - agents
+  - on-device
+  - llama-cpp
+screenshots:
+  - description: 'li_chat, the example: a terminal chat whose model calls two tools, the time and a calculator.'
+    path: screenshots/terminal.png
 
 environment:
   sdk: ^3.10.7

@@ -1,0 +1,11 @@
+Loading Qwen3.5-2B-Q4_0.gguf ...
+qwen35 on Metal, Qwen35Profile(accepted: any). /new, /quit
+
+> [get_time({}) -> {"date": "2026-10-16", "time": "16:54", "weekday": "Friday", "timezone": "CEST"}]
+It is 16:54 (4:54 PM) on Friday, October 16, 2026, in the CEST timezone.
+
+> [calculate({"expression":"186.40 * 1.10"}) -> {"expression": "186.40 * 1.10", "result": 205.04000000000002}]
+[calculate({"expression":"205.04 / 4"}) -> {"expression": "205.04 / 4", "result": 51.26}]
+Each person pays 51.26 euros.
+
+> 

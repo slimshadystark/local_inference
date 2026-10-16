@@ -1,8 +1,13 @@
 # local_inference
 
-Run a language model on the device, in Dart and Flutter, with tool calling and a ready chat UI. The models are GGUF
-files, run by [llama.cpp](https://github.com/ggml-org/llama.cpp) through
-[llamadart](https://pub.dev/packages/llamadart); nothing leaves the device.
+**Run LLMs and AI agents on the device, in Dart and Flutter.** GGUF models through
+[llama.cpp](https://github.com/ggml-org/llama.cpp) (via [llamadart](https://pub.dev/packages/llamadart)), tool calls
+that come out well-formed even from small models, an agent loop that runs your tools and asks before it acts, and a
+Flutter chat UI you can drop in or rebuild. Offline and private: nothing leaves the device.
+
+![Tool calling, a confirmation before an action, and a custom theme](doc/hero.png)
+
+*The kit's own widgets with a scripted model, drawn by [tool/screenshots](https://github.com/slimshadystark/local_inference/tree/main/packages/local_inference_flutter/tool/screenshots).*
 
 | Package | What it is | |
 |---|---|---|
@@ -42,6 +47,7 @@ flutter pub get
 (cd packages/local_inference && dart test)
 (cd packages/local_inference_flutter && flutter test)
 dart run tool/ci/snippets.dart      # every Dart block of the READMEs compiles
+(cd packages/local_inference_flutter && flutter test tool/screenshots/screenshots_test.dart)   # the screenshots
 ```
 
 ## License

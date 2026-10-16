@@ -1,4 +1,7 @@
-/// Flutter layer of local_inference: adapters, the chat and model-setup UI, background download, device probe.
+/// On-device AI chat and agents for Flutter: a drop-in, customizable chat UI over an LLM that runs on the phone, with
+/// tool calling, background model downloads and device checks. Offline and private.
+///
+/// Where to start: `LocalInferenceChat(config:, model:)` is a whole chat in one widget (the README's quick start).
 ///
 /// The app's license page also lists the native libraries it bundles: the plugin registers their texts before
 /// `main()` ([NativeLicenses]).
